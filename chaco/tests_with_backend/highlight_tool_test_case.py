@@ -1,3 +1,7 @@
+import pyface.qt
+from traits.etsconfig.api import ETSConfig
+ETSConfig.toolkit='qt4'
+
 from traits.api import HasTraits, Instance
 from traitsui.api import Item, View
 from enable.component_editor import ComponentEditor

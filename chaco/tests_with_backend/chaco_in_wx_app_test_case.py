@@ -3,8 +3,11 @@ works.
 
 Source: http://docs.enthought.com/chaco/user_manual/how_do_i.html
 """
+# Make sure wx is the backend
 import os
-os.environ["ETS_TOOLKIT"]="wx"
+os.environ["ETS_TOOLKIT"] = "wx"
+
+# Example proper starts
 import wx
 from numpy import arange
 from scipy.special import jn

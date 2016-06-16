@@ -262,16 +262,18 @@ class LassoSelection(AbstractController):
         # for the active selection
 
         for selection in self._previous_selections:
-            selected_mask |= (points_in_polygon(data, selection, False))
+            selected_mask |= (points_in_polygon(data, selection, False)).astype(numpy.bool)
 
+        active_mask = points_in_polygon(
+            data, self._active_selection, False
+        ).astype(numpy.bool)
         if self.selection_mode == 'exclude':
-            selected_mask |= (points_in_polygon(data, self._active_selection, False))
+            selected_mask |= active_mask
             selected_mask = 1 - selected_mask
-
         elif self.selection_mode == 'invert':
-            selected_mask = -1 * (selected_mask -points_in_polygon(data, self._active_selection, False))
+            selected_mask = -1 * (selected_mask - active_mask)
         else:
-            selected_mask |= (points_in_polygon(data, self._active_selection, False))
+            selected_mask |= active_mask
 
         if sometrue(selected_mask != self.selection_datasource.metadata[self.metadata_name]):
             self.selection_datasource.metadata[self.metadata_name] = selected_mask
